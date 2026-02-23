@@ -11,8 +11,7 @@ services:
     networks:
       - wallet-net
     volumes:
-      - ./01-create-database-investment.sql:/docker-entrypoint-initdb.d/01-create-database-investment.sql
-      - ./02-create-database-user.sql:/docker-entrypoint-initdb.d/02-create-database-user.sql
+      - ./01-create-database-wallet.sql:/docker-entrypoint-initdb.d/01-create-database-wallet.sql
 
       - ./pg_data:/var/lib/postgresql/data
 networks:
