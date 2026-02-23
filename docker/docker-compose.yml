@@ -1,0 +1,20 @@
+services:
+  pgsql-investment-wallet:
+    image: postgres:17.6
+    container_name: pgsql-investment-wallet
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: pgsql-wallet-password
+      POSTGRES_USER: pgsql-master
+    networks:
+      - wallet-net
+    volumes:
+      - ./01-create-database-investment.sql:/docker-entrypoint-initdb.d/01-create-database-investment.sql
+      - ./02-create-database-user.sql:/docker-entrypoint-initdb.d/02-create-database-user.sql
+
+      - ./pg_data:/var/lib/postgresql/data
+networks:
+  wallet-net:
+    driver: bridge
