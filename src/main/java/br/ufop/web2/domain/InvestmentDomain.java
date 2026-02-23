@@ -16,8 +16,11 @@ public class InvestmentDomain {
     private UUID id;
     private InvestmentType type;
     private String symbol;
+    private Integer quantity;
     private Double purchasePrice;
     private LocalDateTime purchaseDateTime;
+
+    private UserDomain user;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

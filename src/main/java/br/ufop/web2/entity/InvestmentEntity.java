@@ -23,6 +23,8 @@ public class InvestmentEntity {
     @Column(nullable = false)
     private InvestmentType type;
     @Column(nullable = false)
+    private Integer quantity;
+    @Column(nullable = false)
     private String symbol;
     @Column(nullable = false)
     private Double purchasePrice;
