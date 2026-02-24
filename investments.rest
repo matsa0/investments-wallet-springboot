@@ -1,0 +1,55 @@
+@urlServer = http://localhost:8080/investments
+
+##---- INVESTMENT ----##
+
+### POST
+POST {{urlServer}}/user/d56c2b5c-aba1-4efa-acc3-e402a6d17dc4
+Content-Type: application/json
+
+{
+  "type": 3,
+  "quantity": 2,
+  "symbol": "BTAL11",
+  "purchasePrice": 89.65,
+  "purchaseDateTime": "2026-02-23T22:30:00"
+}
+
+###
+
+### FIND BY USER ID
+GET {{urlServer}}/user/d56c2b5c-aba1-4efa-acc3-e402a6d17dc4
+
+###
+
+### FIND BY TYPE ID
+GET {{urlServer}}/type/2
+
+###
+
+### SUMMARY
+GET {{urlServer}}/summary/d56c2b5c-aba1-4efa-acc3-e402a6d17dc4
+
+###
+
+### UPDATE
+PUT {{urlServer}}
+Content-Type: application/json
+
+{
+  "id": "814a3037-4088-468d-bb3a-5728978716b2",
+  "type": 2,
+  "quantity": 110,
+  "symbol": "ASTER",
+  "purchasePrice": 0.720,
+  "purchaseDateTime": "2025-02-20T10:05:12"
+}
+
+###
+
+### DELETE
+DELETE {{urlServer}}
+Content-Type: application/json
+
+{
+
+}

@@ -49,8 +49,9 @@ public class UserConverter {
         if (domain.getInvestments() != null) {
             entity.setInvestments(domain.getInvestments().stream()
                     .map(inv -> {
-                        InvestmentEntity investmentEntity = InvestmentConverter.toEntity(inv);
-                        investmentEntity.setUser(entity); // user reference (avoids StackOverflowError)
+                        InvestmentEntity investmentEntity = InvestmentConverter.toEntity(inv, entity);
+                        investmentEntity.setUser(entity);
+
                         return investmentEntity;
                     }).toList());
         }

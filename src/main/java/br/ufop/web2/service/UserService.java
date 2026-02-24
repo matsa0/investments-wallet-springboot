@@ -9,6 +9,7 @@ import br.ufop.web2.dto.user.UserDTO;
 import br.ufop.web2.entity.UserEntity;
 import br.ufop.web2.exception.UseCaseException;
 import br.ufop.web2.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +17,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    private UserRepository repository;
+    private final UserRepository repository;
 
     public List<UserDTO> findAll() {
         List<UserEntity> entities = repository.findAll();

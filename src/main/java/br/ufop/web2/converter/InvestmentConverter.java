@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class InvestmentConverter {
 
-    // RequestDTO --> Domain (For creation)
+    // RequestDTO --> Domain
     public static InvestmentDomain toDomain(CreateInvestmentDTO dto) {
         if (dto == null) return null;
         return InvestmentDomain.builder()
@@ -36,8 +36,8 @@ public class InvestmentConverter {
                 .build();
     }
 
-    // Domain --> Entity
-    public static InvestmentEntity toEntity(InvestmentDomain domain) {
+    //Domain --> Entity
+    public static InvestmentEntity toEntity(InvestmentDomain domain, br.ufop.web2.entity.UserEntity user) {
         if (domain == null) return null;
         return InvestmentEntity.builder()
                 .id(domain.getId())
@@ -46,14 +46,17 @@ public class InvestmentConverter {
                 .symbol(domain.getSymbol())
                 .purchasePrice(domain.getPurchasePrice())
                 .purchaseDateTime(domain.getPurchaseDateTime())
+                .user(user)
                 .build();
     }
 
-    // Entity --> ResponseDTO
+
+    // Entity --> ResponseDTO (
     public static InvestmentDTO toResponseDTO(InvestmentEntity entity) {
         if (entity == null) return null;
         return new InvestmentDTO(
                 entity.getId(),
+                entity.getUser().getId(),
                 entity.getType().getId(),
                 entity.getQuantity(),
                 entity.getSymbol(),

@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user-tb")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Builder
 public class UserEntity {
 

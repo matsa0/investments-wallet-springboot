@@ -7,12 +7,11 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: pgsql-wallet-password
-      POSTGRES_USER: pgsql-master
+      POSTGRES_USER: pg-wallet-admin
+      POSTGRES_DB: investment-wallet
     networks:
       - wallet-net
     volumes:
-      - ./01-create-database-wallet.sql:/docker-entrypoint-initdb.d/01-create-database-wallet.sql
-
       - ./pg_data:/var/lib/postgresql/data
 networks:
   wallet-net:

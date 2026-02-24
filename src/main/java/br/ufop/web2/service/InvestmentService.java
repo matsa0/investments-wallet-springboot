@@ -9,44 +9,42 @@ import br.ufop.web2.enums.InvestmentType;
 import br.ufop.web2.exception.UseCaseException;
 import br.ufop.web2.repository.InvestmentRepository;
 import br.ufop.web2.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class InvestmentService {
 
-    private InvestmentRepository repository;
-    private UserRepository userRepository;
+    private final InvestmentRepository repository;
+    private final UserRepository userRepository;
 
     // POST INVESTMENTS
-    public InvestmentDTO create(CreateInvestmentDTO createInvestmentDTO) {
+    public InvestmentDTO create(UUID userId, CreateInvestmentDTO createInvestmentDTO) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new UseCaseException("ERROR! User not found."));
+
         InvestmentDomain investmentDomain = InvestmentConverter.toDomain(createInvestmentDTO);
 
-        // validate (useCase)
+        InvestmentEntity investmentEntity = InvestmentConverter.toEntity(investmentDomain, user);
 
-        InvestmentEntity investmentEntity = InvestmentConverter.toEntity(investmentDomain);
         repository.save(investmentEntity);
         return InvestmentConverter.toResponseDTO(investmentEntity);
     }
 
     // GET INVESTMENTS BY USER
     public List<InvestmentDTO> findAllByUserId(UUID userId) {
-        Optional<UserEntity> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
+        if (!userRepository.existsById(userId)) {
             throw new UseCaseException("ERROR! User doesn't exist");
         }
-
         List<InvestmentEntity> entities = repository.findAllByUserId(userId);
-        if (entities.isEmpty()) {
-            throw new UseCaseException("ERROR! This user doesn't have investments");
-        }
-
         return entities.stream().map(InvestmentConverter::toResponseDTO).toList();
     }
 
     // GET INVESTMENTS BY TYPE
-    public List<InvestmentDTO> findByTypeId(Integer typeId) {
+    public List<InvestmentDTO> findAllByTypeId(Integer typeId) {
 
         // validate if type id is valid
         InvestmentType type = InvestmentType.getTypeById(typeId);

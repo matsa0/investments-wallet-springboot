@@ -1,0 +1,49 @@
+@urlServer = http://localhost:8080/users
+
+##---- USER ----##
+
+### FIND ALL
+GET {{urlServer}}
+
+###
+
+### FIND BY ID
+GET {{urlServer}}/5aa12c54-3204-45f4-b25b-ab3b2c0466d4
+
+###
+
+### POST
+POST {{urlServer}}
+Content-Type: application/json
+
+{
+  "name": "Mauro",
+  "email": "mauro@email.com",
+  "password": "12345678"
+}
+
+###
+
+### UPDATE
+PUT {{urlServer}}
+Content-Type: application/json
+
+{
+  "id": "1e8ed2d3-e34c-497c-8fe7-e0efa9115f9b",
+  "name": "Lucia",
+  "email": "lucia@email.com",
+  "password": "12345678"
+}
+
+###
+
+### DELETE
+DELETE {{urlServer}}
+Content-Type: application/json
+
+{
+  "id": "aabf7a82-4f67-4290-8027-4c40ce4559a9",
+  "password": "12345678"
+}
+
+###

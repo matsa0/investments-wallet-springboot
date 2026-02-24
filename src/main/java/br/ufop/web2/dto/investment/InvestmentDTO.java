@@ -5,6 +5,7 @@ import java.util.UUID;
 
 public record InvestmentDTO(
     UUID id,
+    UUID userId,
     Integer type,
     Integer quantity,
     String symbol,
