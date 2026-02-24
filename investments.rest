@@ -7,11 +7,11 @@ POST {{urlServer}}/user/d56c2b5c-aba1-4efa-acc3-e402a6d17dc4
 Content-Type: application/json
 
 {
-  "type": 3,
-  "quantity": 2,
-  "symbol": "BTAL11",
-  "purchasePrice": 89.65,
-  "purchaseDateTime": "2026-02-23T22:30:00"
+  "type": 1,
+  "quantity": 0,
+  "symbol": "ITUB4",
+  "purchasePrice": 47.45,
+  "purchaseDateTime": "2026-02-23T00:34:00"
 }
 
 ###
@@ -22,7 +22,7 @@ GET {{urlServer}}/user/d56c2b5c-aba1-4efa-acc3-e402a6d17dc4
 ###
 
 ### FIND BY TYPE ID
-GET {{urlServer}}/type/2
+GET {{urlServer}}/user/d56c2b5c-aba1-4efa-acc3-e402a6d17dc4/type/3
 
 ###
 
@@ -51,5 +51,5 @@ DELETE {{urlServer}}
 Content-Type: application/json
 
 {
-
+  "id": "0c6d54a6-fc61-4af5-9155-591e6c8916a3"
 }

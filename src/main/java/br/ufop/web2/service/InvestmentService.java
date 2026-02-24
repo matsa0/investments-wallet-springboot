@@ -2,6 +2,7 @@ package br.ufop.web2.service;
 
 import br.ufop.web2.converter.InvestmentConverter;
 import br.ufop.web2.domain.InvestmentDomain;
+import br.ufop.web2.domain.usecase.CreateInvestmentUseCase;
 import br.ufop.web2.dto.investment.*;
 import br.ufop.web2.entity.InvestmentEntity;
 import br.ufop.web2.entity.UserEntity;
@@ -20,6 +21,7 @@ public class InvestmentService {
 
     private final InvestmentRepository repository;
     private final UserRepository userRepository;
+    private final CreateInvestmentUseCase createInvestmentUseCase;
 
     // POST INVESTMENTS
     public InvestmentDTO create(UUID userId, CreateInvestmentDTO createInvestmentDTO) {
@@ -27,7 +29,8 @@ public class InvestmentService {
                 .orElseThrow(() -> new UseCaseException("ERROR! User not found."));
 
         InvestmentDomain investmentDomain = InvestmentConverter.toDomain(createInvestmentDTO);
-
+        createInvestmentUseCase.setInvestmentDomain(investmentDomain);
+        createInvestmentUseCase.validate();
         InvestmentEntity investmentEntity = InvestmentConverter.toEntity(investmentDomain, user);
 
         repository.save(investmentEntity);
@@ -44,16 +47,17 @@ public class InvestmentService {
     }
 
     // GET INVESTMENTS BY TYPE
-    public List<InvestmentDTO> findAllByTypeId(Integer typeId) {
-
-        // validate if type id is valid
-        InvestmentType type = InvestmentType.getTypeById(typeId);
-        List<InvestmentEntity> entities = repository.findAllByType(type);
-        if (entities.isEmpty()) {
-            throw new UseCaseException("ERROR! No investments found for this type.");
+    public List<InvestmentDTO> findAllByUserIdAndType(UUID userId, Integer typeId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UseCaseException("ERROR! User doesn't exist");
         }
+        InvestmentType type = InvestmentType.getTypeById(typeId);
 
-        return entities.stream().map(InvestmentConverter::toResponseDTO).toList();
+        List<InvestmentEntity> entities = repository.findAllByUserIdAndType(userId, type);
+
+        return entities.stream()
+                .map(InvestmentConverter::toResponseDTO)
+                .toList();
     }
 
     // PUT INVESTMENTS

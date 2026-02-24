@@ -2,6 +2,7 @@ package br.ufop.web2.service;
 
 import br.ufop.web2.converter.UserConverter;
 import br.ufop.web2.domain.UserDomain;
+import br.ufop.web2.domain.usecase.CreateUserUseCase;
 import br.ufop.web2.dto.user.CreateUserDTO;
 import br.ufop.web2.dto.user.DeleteUserDTO;
 import br.ufop.web2.dto.user.UpdateUserDTO;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository repository;
+    private final CreateUserUseCase createUserUseCase;
 
     public List<UserDTO> findAll() {
         List<UserEntity> entities = repository.findAll();
@@ -42,7 +44,8 @@ public class UserService {
     public UserDTO create(CreateUserDTO userDTO) {
         UserDomain userDomain = UserConverter.toDomain(userDTO);
 
-        // validate (useCase)
+        createUserUseCase.setUserDomain(userDomain);
+        createUserUseCase.validate();
 
         UserEntity userEntity = repository.save(UserConverter.toEntity(userDomain));
         return UserConverter.toResponseDTO(userEntity);

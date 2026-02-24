@@ -12,5 +12,5 @@ import java.util.UUID;
 public interface InvestmentRepository extends JpaRepository<InvestmentEntity, UUID> {
 
     List<InvestmentEntity> findAllByUserId(UUID id);
-    List<InvestmentEntity> findAllByType(InvestmentType type);
+    List<InvestmentEntity> findAllByUserIdAndType(UUID userId, InvestmentType type);
 }

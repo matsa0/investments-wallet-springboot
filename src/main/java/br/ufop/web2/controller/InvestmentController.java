@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -30,9 +29,10 @@ public class InvestmentController {
         return ResponseEntity.ok(investments);
     }
 
-    @GetMapping("/type/{typeId}")
-    public ResponseEntity<List<InvestmentDTO>> findAllByTypeId(@PathVariable(value = "typeId") Integer id) {
-        List<InvestmentDTO> investments = service.findAllByTypeId(id);
+    @GetMapping("/user/{userId}/type/{typeId}")
+    public ResponseEntity<List<InvestmentDTO>> findAllByUserIdAndType(@PathVariable UUID userId, @PathVariable Integer typeId) {
+
+        List<InvestmentDTO> investments = service.findAllByUserIdAndType(userId, typeId);
         return ResponseEntity.ok(investments);
     }
 
